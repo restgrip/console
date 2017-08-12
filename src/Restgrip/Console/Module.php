@@ -1,6 +1,7 @@
 <?php
 namespace Restgrip\Console;
 
+use Restgrip\Console\Command\EventSubscriberCommand;
 use Restgrip\Module\ModuleAbstract;
 
 /**
@@ -12,5 +13,10 @@ class Module extends ModuleAbstract
     protected function console()
     {
         $this->getDI()->setShared('console', Application::class);
+        $this->getDI()->getShared('console')->addCommands(
+            [
+                new EventSubscriberCommand($this->getDI()),
+            ]
+        );
     }
 }
